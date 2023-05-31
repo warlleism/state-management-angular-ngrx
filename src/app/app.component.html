@@ -16,3 +16,14 @@
 <br />
 <input [(ngModel)]="idade" type="text" placeholder="idade" />
 <app-display-contador />
+<br />
+<br />
+
+<div *ngFor="let item of item$ | async | keyvalue">
+  <div>
+    {{ item.value.nome }}
+  </div>
+  <div>
+    {{ item.value.idade }}
+  </div>
+</div>

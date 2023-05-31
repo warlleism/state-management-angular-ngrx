@@ -10,9 +10,7 @@ import { map } from 'rxjs/operators';
 })
 export class AppComponent {
   title = 'ngrx-study';
-
   def: string = ''
-
   nome: string = '';
   idade: string = '';
 
@@ -23,6 +21,18 @@ export class AppComponent {
     .pipe(
       map(e => e.counter)
     )
+
+  item$ = this.store
+    .select('app')
+    .pipe(
+      map(e => e.item)
+    )
+
+  ngOnInit(): void {
+    this.item$.subscribe(value => {
+      console.log(value);
+    });
+  }
 
   definirContador(valor: string) {
     const valorTratado = parseFloat(valor)
@@ -38,6 +48,8 @@ export class AppComponent {
 
   adicionarItem(): void {
     this.store.dispatch(adicionarNovoItem({ nome: this.nome, idade: this.idade }));
+    // const localItem = localStorage.getItem('item');
+    // const parsedItem = localItem ? JSON.parse(localItem) : null;
   }
 
 }

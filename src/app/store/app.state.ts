@@ -7,9 +7,12 @@ export interface IAppState {
   }
 }
 
+const localItem = localStorage.getItem('item');
+const parsedItem = localItem ? JSON.parse(localItem) : null;
+
 export const appInitialState: IAppState = {
   counter: 2,
-  item: []
+  item: localItem ? parsedItem : []
 }
 
 export const incrementaContador = createAction('[App] Aumenta contador');
@@ -48,6 +51,8 @@ export const appReducer = createReducer(
     console.log('--------------------')
     console.log(state)
     const newItemArray = Array.isArray(state.item) ? state.item : [];
+
+    localStorage.setItem('item', JSON.stringify([...newItemArray, novoItem]))
 
     return {
       ...state,
